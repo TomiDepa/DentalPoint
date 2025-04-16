@@ -1,0 +1,115 @@
+/* Fondo dinámico */
+.register-background {
+    background-image: url('/FONDOSEMINARIO.jpg'); /* Cambia esto por la ruta real de tu imagen */
+    background-size: cover; /* Ajusta la imagen para cubrir toda la pantalla */
+    background-position: center; /* Centra la imagen */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    height: 100vh; /* Ocupar toda la altura de la pantalla */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Alegreya SC", serif;
+
+}
+/* Título principal */
+.app-title {
+    margin-top: -100px;
+    font-size: 3rem;
+    font-weight: bold;
+    color: white;
+    margin-bottom: -60px;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Contenedor del formulario */
+
+
+/* Animación de entrada */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Estilos del título del formulario */
+.login-container h2 {
+    background-color: transparent; /* Fondo transparente */
+    color: #2592c5; /* Texto blanco para destacar */
+    font-size: 1.5rem;
+    display: block;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+/* Contenedor de cada input */
+.input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    color: #0077b6;
+}
+
+/* Estilos de los campos de entrada */
+.login-container input {
+    width: 300px; /* Aumentamos el tamaño */
+    max-width: 400px; /* Limita el ancho en pantallas grandes */
+    padding: 12px; /* Hacemos los inputs más cómodos */
+    margin: 10px 0; /* Más separación entre ellos */
+    border: 2px solid #a9d0ee;
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    color: #0d5074;
+    transition: all 0.3s ease;
+    background-color: #f4ffff;
+    box-sizing: border-box;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Efecto al enfocar */
+.login-container input:focus {
+    border-color: #0077b6;
+    box-shadow: 0 0 10px rgba(0, 119, 182, 0.3);
+}
+
+/* Botón de login */
+.botonlogin{
+    background: #0077b6;
+    font-weight: bold;
+    font-family: "Alegreya SC", serif;
+    color: white;
+    padding: 9px 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.3rem;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+    transition: background 0.3s ease;
+}
+
+/* Efecto hover del botón */
+.botonlogin:hover {
+    background: #005f8e;
+}
+
+/* Mensaje de error */
+.error-message {
+    color: red;
+    margin-top: 10px;
+}
+
+/* Ajustar el contenedor del login para que no quede debajo del navbar */
+.login-container {
+    margin-top: 80px; /* Espacio para que el navbar no lo tape */
+}
