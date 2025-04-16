@@ -17,7 +17,6 @@
   z-index: 1000;
 }
 
-
 .header a {
   color: #023e8a;
   text-decoration: none;
@@ -50,29 +49,37 @@
 }
 
 .header-center {
-  position: relative;
-  width: 100%;
-  max-width: 400px;
+  flex: 1; /* ✅ esto lo hace crecer de forma responsiva */
+  max-width: 500px;
+  margin: 0 20px;
 }
 
 .search-input {
   width: 100%;
   padding: 12px 40px;
-  border: 1px solid transparent;
   border-radius: 16px;
-  background: 
-    linear-gradient(to right, #1d2f44, #2c445f) padding-box,  /* Fondo interior */
-    linear-gradient(to right, #2c445f, #2c445f) border-box;   /* Borde degradado */
-  font-size: 16px;
+  border: 1px solid transparent;
   transition: all 0.3s ease;
+  background: 
+    linear-gradient(to right, #1d2f44, #2c445f) padding-box,
+    linear-gradient(to right, #2c445f, #2c445f) border-box;
+  font-size: 16px;
   color: rgb(180, 214, 245);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  box-sizing: border-box; /* ✅ clave */
+  padding-left: 40px; /* Espacio para la lupa */
 }
+
+.search-input:focus {
+  padding-left: 48px; /* más espacio para el ícono */
+  transform: scale(1.03); /* pequeña expansión */
+}
+
+
+
 .search-input::placeholder {
   color: #a4c0ce;
 }
-
-
 
 .search-input:focus {
   border-color: #00aeff;
@@ -82,26 +89,74 @@
 
 .search-icon {
   position: absolute;
-  left: 12px;
+  left: 12px;  /* Ajustamos la posición horizontal */
   top: 50%;
-  transform: translateY(-50%);
+  transform: translateY(-50%); /* Centrado vertical */
   color: #3e84a5;
+  z-index: 10; /* Aseguramos que la lupa quede por encima del fondo */
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+.search-container:focus-within .search-icon {
+  color: #00aeff;
+  transform: scale(); /* Aumento de tamaño al enfocarse */
+}
+@keyframes slideFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .search-results {
   position: absolute;
-  top: 110%;
+  top: calc(100% + 8px);
   left: 0;
-  right: 0;
-  background: #ffffff;
+  width: 100%;
+  box-sizing: border-box;
+  background: linear-gradient(to right, #35679c, #7fbaeb) padding-box,
+              linear-gradient(to right, #3b6596, #3b6596) border-box;
   border-radius: 16px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
-  margin-top: 8px;
-  padding: 0;
-  list-style: none;
   max-height: 240px;
   overflow-y: auto;
-  z-index: 1000;
+  overflow-anchor: none; /* 👈 evita el "salto" feo de scroll */
+  z-index: 1100;
+  padding: 0;
+  list-style: none;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+.search-results::-webkit-scrollbar {
+  display: none; /* Chrome */
+}
+.search-container:focus-within .search-results,
+.search-results.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Animación limpia en cascada sin flashes raros */
+.search-results.show .search-item {
+  animation: slideFadeIn 0.3s ease both;
+}
+
+.search-results.show .search-item:nth-child(1) { animation-delay: 0.05s; }
+.search-results.show .search-item:nth-child(2) { animation-delay: 0.1s; }
+.search-results.show .search-item:nth-child(3) { animation-delay: 0.15s; }
+.search-results.show .search-item:nth-child(4) { animation-delay: 0.2s; }
+.search-results.show .search-item:nth-child(5) { animation-delay: 0.25s; }
+/* Agregá más si necesitás */
+
+.search-input:hover,
+.search-input:focus {
+  box-shadow: 0 0 8px rgba(0, 174, 255, 0.4);
 }
 
 .search-item {
@@ -116,12 +171,20 @@
 }
 
 .search-item:hover {
-  background-color: #f0f9ff;
+  background: 
+    linear-gradient(to right, #3694e0, #a5d1f5) padding-box,  /* Fondo interior */
+    linear-gradient(to right, #88c9fd, #88c9fd) border-box;
 }
 
 .search-item-content {
   display: flex;
   flex-direction: column;
+}
+
+.search-container {
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .search-item-content strong {
@@ -162,9 +225,6 @@
   transform: scale(1.1);
 }
 
-
-
-
 .user-dropdown {
   position: absolute;
   top: 60px; /* Ajustá según el alto del header */
@@ -199,4 +259,95 @@
 
 .user-dropdown button:hover {
   background-color: #d62828;
+}
+
+.user-result {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: white;
+}
+
+.user-icon {
+  width: 20px;
+  height: 20px;
+  color: #fff;
+}
+
+.user-name {
+  flex: 1;
+  font-weight: bold;
+}
+
+.user-dni {
+  font-size: 13px;
+  color: #ffffff;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .header-left,
+  .header-center,
+  .header-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .header-center {
+    margin: 0;
+    max-width: 100%;
+  }
+}
+.user-icon-container {
+  position: relative;
+}
+.dropdown-menu {
+  position: absolute;
+  top: 48px;
+  right: 0;
+  background-color: white;
+  color: #333;
+  padding: 0; /* quitamos el padding vertical de arriba/abajo */
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  min-width: 180px;
+  animation: fadeSlide 0.2s ease forwards;
+  border: 1px solid #17509186;
+  overflow: hidden; /* por si usás border-radius con hover */
+}
+
+.dropdown-menu button {
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 14px 16px;
+  cursor: pointer;
+  font-size: 15px;
+  color: #023e8a;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  width: 100%;
+  display: flex;
+  align-items: center; /* ✅ centra verticalmente el texto */
+}
+
+/* separador visual entre botones */
+.dropdown-menu button + button {
+  border-top: 1px solid #264d9754;
+}
+
+/* efecto hover */
+.dropdown-menu button:hover {
+  background-color: #e0f2ff;
+  color: #0077b6;
 }

@@ -87,35 +87,39 @@ const Header = () => {
         <img src="./public/logo.png" alt="Logo" className="logo" />
         <span className="header-title">Inicio</span>
       </div>
-
       <div className="header-center" ref={wrapperRef}>
-        <div className="search-container">
-          <Search className="search-icon" />
-          <input
-            type="text"
-            placeholder="Buscar por nombre, apellido o DNI"
-            value={query}
-            onChange={handleInputChange}
-            className="search-input"
-          />
-        </div>
-        {resultados.length > 0 && (
-          <ul className="search-results">
-            {resultados.map((usuario) => (
-              <li
-                key={usuario.id}
-                onClick={() => handleUsuarioClick(usuario.id)}
-                className="search-item"
-              >
-                <div className="user-info">
-                  <strong>{usuario.nombre} {usuario.apellido}</strong>
-                  <span>DNI: {usuario.dni}</span>
-                </div>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
+  <div className="search-container">
+    <Search className="search-icon" />
+    <input
+      type="text"
+      className="search-input"
+      value={query}
+      onChange={handleInputChange}
+      placeholder="Buscar por nombre, apellido o DNI"
+    />
+    {resultados.length > 0 && (
+      <ul className={`search-results ${resultados.length > 0 ? 'show' : ''}`}>
+        {resultados.map((usuario) => (
+          <li
+            key={usuario.id}
+            className="search-item"
+            onClick={() => handleUsuarioClick(usuario.id)}
+          >
+            <div className="user-result">
+              <User className="user-icon" />
+              <span className="user-name">
+                {usuario.nombre} {usuario.apellido}
+              </span>
+              <span className="user-dni">DNI: {usuario.dni}</span>
+            </div>
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
+</div>
+
+
 
       <div className="header-right">
         {/* Icono de usuario y menú desplegable */}
@@ -124,7 +128,7 @@ const Header = () => {
             <User className="icon" onClick={handleMenuToggle} />
             {isDropdownOpen && (
               <div className="dropdown-menu">
-                <p>{userData.nombre}</p>
+                
                 {userData.rol === 'admin' && (
                   <button onClick={handleAdmin}>Administrar</button> 
                 )}

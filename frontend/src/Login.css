@@ -8,7 +8,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: "Alegreya SC", serif;
+  
 
 }
 /* Título principal */
@@ -86,7 +86,7 @@
 .botonlogin{
     background: #0077b6;
     font-weight: bold;
-    font-family: "Alegreya SC", serif;
+    
     color: white;
     padding: 9px 12px;
     border: none;

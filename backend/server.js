@@ -1,8 +1,9 @@
-import express from 'express';
+
 import sequelize from './config/database.js';
 import userRoutes from './routes/users.js'; // Importa correctamente las rutas
-import cors from 'cors';
 
+import express from 'express';
+import cors from 'cors';
 const app = express();
 const PORT = 5000;
 
